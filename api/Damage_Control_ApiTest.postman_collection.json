@@ -1,0 +1,789 @@
+{
+	"info": {
+		"_postman_id": "ed6ce155-d097-4ea9-93d3-7a10d2b86a2a",
+		"name": "Damage_Control_ApiTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12308672"
+	},
+	"item": [
+		{
+			"name": "Авторизация",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"login\":\"admin\",\"password\":\"12345678\"}"
+				},
+				"url": {
+					"raw": "{{login}}",
+					"host": [
+						"{{login}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание объекта 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Код ответа 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Время ответа менее 200 секунд\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"test1\",\r\n  \"latitude\": \"60\",\r\n  \"longitude\": \"50\",\r\n  \"comment\": \"test\",\r\n  \"link\": \"<string>\",\r\n  \"period\": 3600,\r\n  \"isFavorite\": false,\r\n  \"enabled\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}objects",
+					"host": [
+						"{{baseURL}}objects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание объекта 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Код ответа 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Время ответа менее 200 секунд\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"test2\",\r\n  \"latitude\": \"60\",\r\n  \"longitude\": \"50\",\r\n  \"comment\": \"test\",\r\n  \"link\": \"<string>\",\r\n  \"period\": 3600,\r\n  \"isFavorite\": false,\r\n  \"enabled\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}objects",
+					"host": [
+						"{{baseURL}}objects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение свойств объекта по id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"let obj = {\r",
+							"    \"id\": 1,\r",
+							"    \"name\": \"test1\",\r",
+							"    \"latitude\": 60,\r",
+							"    \"longitude\": 50,\r",
+							"    \"comment\": \"test\",\r",
+							"    \"link\": \"<string>\",\r",
+							"    \"period\": 3600,\r",
+							"    \"isFavorite\": false,\r",
+							"    \"enabled\": true,\r",
+							"    \"mode\": \"normal\"\r",
+							"};\r",
+							" pm.test(\"Сравнение получаемого объекта\", ()=>{\r",
+							"     pm.expect(obj).to.eql(pm.response.json())\r",
+							" });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/objects/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"objects",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление объекта по id 1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/objects/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"objects",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Список объектов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"response1 = {\r",
+							"    \"items\": [\r",
+							"        {\r",
+							"            \"id\": 2,\r",
+							"            \"name\": \"test2\",\r",
+							"            \"latitude\": 60,\r",
+							"            \"longitude\": 50,\r",
+							"            \"comment\": \"test\",\r",
+							"            \"link\": \"<string>\",\r",
+							"            \"period\": 3600,\r",
+							"            \"isFavorite\": false,\r",
+							"            \"enabled\": true,\r",
+							"            \"mode\": \"normal\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"count\": 1,\r",
+							"    \"limit\": 10,\r",
+							"    \"offset\": 0,\r",
+							"    \"sort\": \"id\",\r",
+							"    \"order\": \"ASC\",\r",
+							"    \"favoritesFirst\": true,\r",
+							"    \"damagedFirst\": false\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\"Сравнение полученого ответа с ожидаемым\", ()=>{\r",
+							"    pm.expect(response1).to.eql(pm.response.json())\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/objects?limit=10",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"objects"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "id",
+							"disabled": true
+						},
+						{
+							"key": "order",
+							"value": "ASC",
+							"disabled": true
+						},
+						{
+							"key": "favoritesFirst",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "damagedFirst",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "minPeriod",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "maxPeriod",
+							"value": "100",
+							"disabled": true
+						},
+						{
+							"key": "enabledOnly",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "disabledOnly",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "favoritesOnly",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "nameContains",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "commentContains",
+							"value": "<string>",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление Proxy 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(204);\r",
+							"});\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"host\":\"193.166.11.12:test\",\"login\":\"test\",\"password\":\"test\",\"enabled\":false}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/proxies",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"proxies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление Proxy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"host\":\"193.166.11.122:test\",\"login\":\"test\",\"password\":\"test\",\"enabled\":false}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/proxies",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"proxies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Лист Прокси",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Время ответа меньше 200\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Объект соответвует шаблону\",()=> {\r",
+							"let ExpectedObject =\r",
+							"    {\r",
+							"        \"id\": 2,\r",
+							"        \"host\": \"193.166.11.122:test\",\r",
+							"        \"login\": \"test\",\r",
+							"        \"password\": \"test\",\r",
+							"        \"enabled\": false,\r",
+							"        \"status\": true\r",
+							"    };\r",
+							"\r",
+							"pm.expect(pm.response.json()).to.deep.include(ExpectedObject);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Значение заголовка Content-Type - application/json\", ()=> {\r",
+							"pm.response.to.be.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"schema =[\r",
+							"    {\r",
+							"        \"id\": 2,\r",
+							"        \"host\": \"193.166.11.122:test\",\r",
+							"        \"login\": \"test\",\r",
+							"        \"password\": \"test\",\r",
+							"        \"enabled\": false,\r",
+							"        \"status\": true\r",
+							"    },\r",
+							"    {\r",
+							"        \"id\": 1,\r",
+							"        \"host\": \"193.166.11.12:test\",\r",
+							"        \"login\": \"test\",\r",
+							"        \"password\": \"test\",\r",
+							"        \"enabled\": false,\r",
+							"        \"status\": true\r",
+							"    }\r",
+							"];\r",
+							"pm.test(\"Сравнение полученых данных\", ()=> {\r",
+							"    pm.expect(schema).to.eql(pm.response.json())\r",
+							"})\r",
+							"console.log(pm.response.json());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/proxies?offset=0&order=ASC&sort=host&limit=10",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"proxies"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "sort",
+							"value": "host"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удалить Proxy 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 204ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/proxies/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"proxies",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удалить Proxy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 204ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/proxies/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"proxies",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавить сервер ip",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ от сервера 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Запись id в переменную\" , ()=> {\r",
+							"    var responseid = pm.response.json();\r",
+							"    id = responseid.id\r",
+							"    console.log(id)\r",
+							"    pm.environment.set(\"serverID\", id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"host\": \"172.28.9.120\",\r\n  \"password\": \"qwerty\",\r\n  \"enabled\": true,\r\n  \"capacity\": 1000000000,\r\n  \"info\": \"тестовый сервер ip\",\r\n  \"type\": \"ip\",\r\n  \"user\": \"root\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/servers",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"servers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Список серверов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Время ответа меньше 200\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Соответствие списку серверов\", ()=>{\r",
+							"    jsonData = {\r",
+							"    \"items\": [\r",
+							"        {\r",
+							"            \"id\": 1,\r",
+							"            \"host\": \"172.28.9.120\",\r",
+							"            \"capacity\": 1000000000,\r",
+							"            \"enabled\": true,\r",
+							"            \"type\": \"ip\",\r",
+							"            \"info\": \"тестовый сервер ip\",\r",
+							"            \"status\": \"idle\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"count\": 1,\r",
+							"    \"limit\": 10,\r",
+							"    \"offset\": 0,\r",
+							"    \"sort\": \"id\",\r",
+							"    \"order\": \"ASC\"\r",
+							"};\r",
+							"pm.expect(jsonData).to.eql(pm.response.json())\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Проверка свойств объекта id\", ()=>{\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.items[0].id).to.eql(1);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/servers?limit=10",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"servers"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "id",
+							"disabled": true
+						},
+						{
+							"key": "order",
+							"value": "ASC",
+							"disabled": true
+						},
+						{
+							"key": "minCapacity",
+							"value": "<number>",
+							"disabled": true
+						},
+						{
+							"key": "maxCapacity",
+							"value": "<number>",
+							"disabled": true
+						},
+						{
+							"key": "hostContains",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "infoContains",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "ip",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "login",
+			"value": "https://localhost/rbac/okauth_rbac/auth/_"
+		}
+	]
+}
