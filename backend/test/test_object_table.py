@@ -1,5 +1,5 @@
-from tables import generators
-from tables import object_table
+from methods import generators
+from methods import object_table
 
 """Работа с БД"""
 
